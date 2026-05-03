@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>NovaTech Admin - Painel de Controle</title>
+</head>
+<body>
+    <div class="header" style="border-bottom: 1px solid var(--border); margin-bottom: 30px; padding-bottom: 20px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: 2px;">Painel Administrativo</div>
+        <h1 style="font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;">Fila de <span>Chamados</span></h1>
+        <p style="color: var(--muted);">Olá, <%= user.name %>. Gerencie as solicitações de suporte da NovaTech.</p>
+    </div>
+
+    <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px;">
+        <% if (tickets.length === 0) { %>
+            <p>Não há chamados abertos no momento.</p>
+        <% } %>
+
+        <% tickets.forEach(ticket => { %>
+            <div class="card card-blue">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                    <div>
+                        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent2);">ID #<%= ticket.id %></span>
+                        <h3 style="margin-top: 5px;"><%= ticket.title %></h3>
+                    </div>
+                    <span class="status-tag" style="
+                        background: <%= ticket.status === 'Aberto' ? 'rgba(232, 255, 71, 0.1)' : 'rgba(71, 200, 255, 0.1)' %>;
+                        color: <%= ticket.status === 'Aberto' ? 'var(--accent)' : 'var(--accent2)' %>;
+                        border: 1px solid currentColor;
+                    ">
+                        <%= ticket.status %>
+                    </span>
+                </div>
+
+                <p style="font-size: 0.9rem; color: #ccc; margin-bottom: 15px;"><%= ticket.description %></p>
+                
+                <div style="font-size: 11px; color: var(--muted); margin-bottom: 15px; border-top: 1px solid var(--border); padding-top: 10px;">
+                    Solicitante: <strong style="color: var(--text);"><%= ticket.name %></strong><br>
+                    Prioridade: <span style="color: <%= ticket.priority === 'Alta' ? 'var(--danger)' : 'var(--text)' %>"><%= ticket.priority %></span>
+                </div>
+
+                <form action="/ticket/update" method="POST" style="display: flex; gap: 10px;">
+                    <input type="hidden" name="id" value="<%= ticket.id %>">
+                    <select name="status" style="flex: 1; font-size: 12px; height: 35px;">
+                        <option value="Aberto" <%= ticket.status === 'Aberto' ? 'selected' : '' %>>Aberto</option>
+                        <option value="Em Atendimento" <%= ticket.status === 'Em Atendimento' ? 'selected' : '' %>>Em Atendimento</option>
+                        <option value="Resolvido" <%= ticket.status === 'Resolvido' ? 'selected' : '' %>>Resolvido</option>
+                    </select>
+                    <button type="submit" style="width: auto; padding: 0 15px; height: 35px; font-size: 12px;">Atualizar</button>
+                </form>
+            </div>
+        <% }) %>
+    </div>
+
+    <div style="margin-top: 50px; text-align: center;">
+        <a href="/" style="color: var(--muted); font-size: 12px; text-decoration: none; font-family: 'IBM Plex Mono', monospace;">← Sair do Sistema</a>
+    </div>
+</body>
+</html>

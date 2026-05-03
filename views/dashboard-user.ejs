@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <title>NovaTech - Suporte</title>
+</head>
+<body>
+    <h1>Bem-vindo, <%= user.name %></h1>
+    
+    <div class="card">
+        <h3>Abrir Novo Chamado</h3>
+        <form action="/ticket/new" method="POST">
+            <input type="text" name="title" placeholder="Título do problema" required>
+            <textarea name="description" placeholder="Descreva o ocorrido"></textarea>
+            <select name="priority">
+                <option value="Baixa">Baixa</option>
+                <option value="Media">Média</option>
+                <option value="Alta">Alta</option>
+            </select>
+            <button type="submit">Enviar Chamado</button>
+        </form>
+    </div>
+
+    <h3>Meus Chamados</h3>
+    <% tickets.forEach(ticket => { %>
+        <div class="card">
+            <strong>#<%= ticket.id %> - <%= ticket.title %></strong>
+            <span class="status-tag"><%= ticket.status %></span>
+            <p><%= ticket.description %></p>
+        </div>
+    <% }) %>
+</body>
+</html>
