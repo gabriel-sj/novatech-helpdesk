@@ -28,3 +28,10 @@ Este projeto é um sistema de helpdesk funcional desenvolvido para a disciplina 
 - `/public`: Estilização (.css)
 - `server.js`: Lógica e rotas do servidor
 - `database.db`: Base de dados local
+
+- ## 👥 Equipe
+Projeto desenvolvido como atividade prática de Sistemas de Informação por:
+- **Andrey Gentil**
+- **Gabriel Santana**
+
+**Data:** 08.05.2026
